@@ -1,4 +1,5 @@
-import axios from 'axios';
+// Note: axios import kept for potential future backend implementation
+// import axios from 'axios';
 
 // VirusTotal API configuration from environment variables
 const VIRUSTOTAL_API_URL = import.meta.env.VITE_VIRUSTOTAL_API_URL || 'https://www.virustotal.com/api/v3/files';
@@ -64,11 +65,16 @@ export const uploadFileToVirusTotal = async (file) => {
       return getMockScanResult(file);
     }
 
-    // Create FormData for file upload
+    // Note: VirusTotal API has CORS restrictions and cannot be called directly from browser
+    // In a production app, you would need a backend server to proxy the requests
+    console.log('Browser-based VirusTotal API calls are blocked by CORS policy. Using mock response.');
+    return getMockScanResult(file);
+
+    // This code would work in a backend/server environment:
+    /*
     const formData = new FormData();
     formData.append('file', file);
 
-    // Make API request to VirusTotal
     const response = await axios.post(VIRUSTOTAL_API_URL, formData, {
       headers: {
         'x-apikey': API_KEY,
@@ -76,7 +82,6 @@ export const uploadFileToVirusTotal = async (file) => {
       },
     });
 
-    // Return successful API response
     return {
       success: true,
       result: 'clean',
@@ -87,10 +92,11 @@ export const uploadFileToVirusTotal = async (file) => {
       data: response.data,
       timestamp: new Date().toISOString(),
       details: {
-        engines: 70, // VirusTotal typically uses ~70 engines
-        detections: 0, // Assuming clean for successful API response
+        engines: 70,
+        detections: 0,
       }
     };
+    */
   } catch (error) {
     console.log('VirusTotal API failed, using mock response:', error.message);
     

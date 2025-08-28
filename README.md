@@ -77,6 +77,17 @@ src/
 
 ## 🔧 Configuration
 
+### VirusTotal API Limitation
+
+**Important Note**: Due to CORS (Cross-Origin Resource Sharing) restrictions, the VirusTotal API cannot be called directly from a browser-based application. This is a security measure implemented by VirusTotal.
+
+**Current Implementation**: The app uses intelligent mock responses that simulate real antivirus behavior for demonstration purposes.
+
+**For Production Use**: To implement real VirusTotal scanning, you would need:
+- A backend server (Node.js, Python, etc.) to proxy API requests
+- Server-side API calls to VirusTotal
+- The frontend would communicate with your backend instead of VirusTotal directly
+
 ### Environment Variables
 
 The application uses environment variables for configuration. Create a `.env` file in the root directory:
@@ -140,8 +151,10 @@ Each result includes:
 
 - Files are processed client-side when possible
 - No permanent file storage
-- Secure API communication
+- Mock responses simulate real scanning behavior
 - Privacy-focused design
+
+**Note**: Console warnings about "feedback.js" are from Vercel's analytics and can be safely ignored.
 
 ## 🎨 Customization
 

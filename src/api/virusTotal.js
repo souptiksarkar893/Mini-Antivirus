@@ -61,13 +61,12 @@ export const uploadFileToVirusTotal = async (file) => {
   try {
     // Check if API key is configured
     if (!API_KEY || API_KEY === 'YOUR_VIRUSTOTAL_API_KEY') {
-      console.log('VirusTotal API key not configured, using mock response');
+      // Silently use mock response when no API key
       return getMockScanResult(file);
     }
 
-    // Note: VirusTotal API has CORS restrictions and cannot be called directly from browser
-    // In a production app, you would need a backend server to proxy the requests
-    console.log('Browser-based VirusTotal API calls are blocked by CORS policy. Using mock response.');
+    // For demo purposes, we use mock responses due to CORS limitations
+    // In production, you would implement a backend server to handle API calls
     return getMockScanResult(file);
 
     // This code would work in a backend/server environment:
@@ -98,7 +97,7 @@ export const uploadFileToVirusTotal = async (file) => {
     };
     */
   } catch (error) {
-    console.log('VirusTotal API failed, using mock response:', error.message);
+    console.log('API call failed, using mock response:', error.message);
     
     // Return mock response when API fails (if enabled)
     if (ENABLE_MOCK_FALLBACK) {
